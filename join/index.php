@@ -89,20 +89,20 @@ if ($_REQUEST['action'] == 'rewrite') {
                         <input type="password" name="password" size="10" maxlength="20"　 value="<?php echo htmlspecialchars($_POST['password'], ENT_QUOTES) ?>">
                         <?php if ($error['password'] == 'blank'): ?>
                         <p class="error">*パスワードを入力してください*</p>
-                        <?php endif; ?>>
+                        <?php endif; ?>
                         <?php if ($error['password'] == 'length'): ?>
                         <p class="error">*4文字以上で入力してください*</p>
-                        <?php endif; ?>>
+                        <?php endif; ?>
                     </dd>
                 <dt>写真など</dt>
                     <dd>
                         <input type="file" name="image" size="35">
                         <?php if ($error['image'] == 'type'): ?>
                         <p class="error">*写真などは「.gif」「.jpg」の画像をしてしてください*</p>
-                        <?php endif; ?>>
+                        <?php endif; ?>
                         <?php if (!empty($error)): ?>
                         <p class="error">再度、画像をしてしてください*</p>
-                        <?php endif; ?>>
+                        <?php endif; ?>
                     </dd>
             </dl>
             <div><input type="submit" value="入力内容を確認する"></div>
