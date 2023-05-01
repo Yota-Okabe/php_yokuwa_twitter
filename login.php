@@ -1,7 +1,7 @@
 <?php
-
-require('./join/dbconnect.php');
 session_start();
+require('./join/dbconnect.php');
+
 
 if ($_COOKIE['email'] != '') {
     $_POST['email'] = $_COOKIE['email'];
