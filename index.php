@@ -77,7 +77,20 @@ foreach ($posts as $post):
                 <span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>）</span>
                 [ <a href="index.php?res=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">Re</a> ]
             </p>
-            <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES) ?></p>
+            <p class="day">
+                <a href="view_post.php?id=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">
+                    <?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?>
+                </a>
+                
+                <?php
+                if ($post['reply_post_id'] > 0):
+                    ?>
+                    <a href="view_post.php?id=<?php echo htmlspecialchars($post['reply_post_id'], ENT_QUOTES); ?>"> | 返信元のメッセージ</a>
+                    <?php
+                endif;
+                ?>
+
+            </p>
         </div>
 <?php
 endforeach;
