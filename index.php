@@ -81,31 +81,15 @@ function makeLink($value) {
         foreach ($posts as $post):
         ?>
         <div class="msg">
+            <img src="./join/member_picture/<?php echo h($post['picture']); ?>" alt="<?php echo h($post['name']); ?>"  width="48" height="48" >
             <p><?php echo makeLink(h($post['message'])); ?>
                 <span class="name">（<?php echo h($post['name']); ?>）</span>
-                [ <a href="index.php?res=<?php echo h($post['id']); ?>">Re</a> ]
-            </p>
-            <p class="day">
-                <a href="view_post.php?id=<?php echo h($post['id']); ?>">
-                    <?php echo h($post['created']); ?>
-                </a>
-                
-                <?php
-                if ($post['reply_post_id'] > 0):
-                    ?>
-                    <a href="view_post.php?id=<?php echo h($post['reply_post_id']); ?>"> | 返信元のメッセージ</a>
-                    <?php
-            <img src="./join/member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES, 'UTF-8') ?>" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>" width="48" height="48">
-            <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?><span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>）</span>
-                [<a href="index.php?res=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">Re</a>]
-            </p>
-            <p class="day">
-                <a href="view_post.php?id=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>"><?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?></a>
-                
+                [<a href="index.php?res=<?php echo h($post['id']); ?>">Re</a>]</p>
+            <p class="day"><a href="view_post.php?id=<?php echo h($post['id']); ?>"><?php echo h($post['created']); ?></a>
                 <?php
                 if ($post['reply_post_id'] > 0):
                 ?>
-                    <a href="view_post.php?id=<?php echo htmlspecialchars($post['reply_post_id'], ENT_QUOTES); ?>"> | 返信元のメッセージ</a>
+                    <a href="view_post.php?id=<?php echo h($post['reply_post_id']); ?>">返信元のメッセージ</a>
                 <?php
                 endif;
                 ?>
