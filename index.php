@@ -34,6 +34,15 @@ if (isset($_REQUEST['res'])) {
     $table = $response->fetch();
     $message = '@' . $table['name'] . ' ' . $table['message'];
 }
+
+function h($value) {
+    return htmlspecialchars($value, ENT_QUOTES);
+}
+
+function makeLink($value) {
+    return mb_ereg_replace("(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)",'<a href="\1\2">\1\2</a>', $value);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -54,13 +63,13 @@ if (isset($_REQUEST['res'])) {
         <form action="" method="post">
             <dl>
                 <dt>
-                    <?php echo htmlspecialchars($member['name'], ENT_QUOTES) ?>さん、つぶやきをどうぞ
+                    <?php echo h($member['name']); ?>さん、つぶやきをどうぞ
                 </dt>
                 <dd>
                     <textarea name="message" cols="50" rows="5">
-                        <?php echo htmlspecialchars($message, ENT_QUOTES); ?>
+                        <?php echo h($message); ?>
                     </textarea>
-                    <input type="hidden" name="reply_post_id" value="<?php echo htmlspecialchars($_REQUEST['res'],ENT_QUOTES); ?>">
+                    <input type="hidden" name="reply_post_id" value="<?php echo h($_REQUEST['res']); ?>">
                 </dd>
             </dl>
             <div>
@@ -72,24 +81,23 @@ if (isset($_REQUEST['res'])) {
 foreach ($posts as $post):
 ?>
         <div class="msg">
-            <img src="./join/member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES) ?>" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>" width="48" height="48">
-            <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?>
-                <span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>）</span>
-                [ <a href="index.php?res=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">Re</a> ]
+            <img src="./join/member_picture/<?php echo h($post['picture']); ?>" alt="<?php echo h($post['name']); ?>" width="48" height="48">
+            <p><?php echo makeLink(h($post['message'])); ?>
+                <span class="name">（<?php echo h($post['name']); ?>）</span>
+                [ <a href="index.php?res=<?php echo h($post['id']); ?>">Re</a> ]
             </p>
             <p class="day">
-                <a href="view_post.php?id=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">
-                    <?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?>
+                <a href="view_post.php?id=<?php echo h($post['id']); ?>">
+                    <?php echo h($post['created']); ?>
                 </a>
                 
                 <?php
                 if ($post['reply_post_id'] > 0):
                     ?>
-                    <a href="view_post.php?id=<?php echo htmlspecialchars($post['reply_post_id'], ENT_QUOTES); ?>"> | 返信元のメッセージ</a>
+                    <a href="view_post.php?id=<?php echo h($post['reply_post_id']); ?>"> | 返信元のメッセージ</a>
                     <?php
                 endif;
                 ?>
-
             </p>
         </div>
 <?php
