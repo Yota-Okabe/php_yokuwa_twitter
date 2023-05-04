@@ -146,6 +146,7 @@ function makeLink($value) {
             }
             ?>
         </ul>
+        <div style="text-align: right"><a href="logout.php">ログアウト</a></div>
     </div>
 </div>
 </body>
