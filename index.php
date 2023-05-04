@@ -57,9 +57,7 @@ if (isset($_REQUEST['res'])) {
                     <?php echo htmlspecialchars($member['name'], ENT_QUOTES) ?>さん、つぶやきをどうぞ
                 </dt>
                 <dd>
-                    <textarea name="message" cols="50" rows="5">
-                        <?php echo htmlspecialchars($message, ENT_QUOTES); ?>
-                    </textarea>
+                    <textarea name="message" cols="50" rows="5"><?php echo htmlspecialchars($message, ENT_QUOTES); ?></textarea>
                     <input type="hidden" name="reply_post_id" value="<?php echo htmlspecialchars($_REQUEST['res'],ENT_QUOTES); ?>">
                 </dd>
             </dl>
@@ -68,33 +66,30 @@ if (isset($_REQUEST['res'])) {
             </div>
         </form>
 
-<?php
-foreach ($posts as $post):
-?>
+        <?php
+        foreach ($posts as $post):
+        ?>
         <div class="msg">
-            <img src="./join/member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES) ?>" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>" width="48" height="48">
-            <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?>
-                <span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>）</span>
-                [ <a href="index.php?res=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">Re</a> ]
+            <img src="./join/member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES, 'UTF-8') ?>" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>" width="48" height="48">
+            <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES) ?><span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES) ?>）</span>
+                [<a href="index.php?res=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">Re</a>]
             </p>
             <p class="day">
-                <a href="view_post.php?id=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">
-                    <?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?>
-                </a>
+                <a href="view_post.php?id=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>"><?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?></a>
                 
                 <?php
                 if ($post['reply_post_id'] > 0):
-                    ?>
+                ?>
                     <a href="view_post.php?id=<?php echo htmlspecialchars($post['reply_post_id'], ENT_QUOTES); ?>"> | 返信元のメッセージ</a>
-                    <?php
+                <?php
                 endif;
                 ?>
 
             </p>
         </div>
-<?php
-endforeach;
-?>
+        <?php
+        endforeach;
+        ?>
     </div>
 </div>
 </body>
