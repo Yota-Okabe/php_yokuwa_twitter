@@ -40,7 +40,11 @@ function h($value) {
 }
 
 function makeLink($value) {
+<<<<<<< Updated upstream
     return mb_ereg_replace("(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)",'<a href="\1\2">\1\2</a>', $value);
+=======
+    return mb_ereg_replace("(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)", '<a href="\1\2">1\2\</a>', $value);
+>>>>>>> Stashed changes
 }
 
 ?>
@@ -63,7 +67,11 @@ function makeLink($value) {
         <form action="" method="post">
             <dl>
                 <dt>
+<<<<<<< Updated upstream
                     <?php echo h($member['name']); ?>さん、つぶやきをどうぞ
+=======
+                    <?php echo h($member['name']) ?>さん、つぶやきをどうぞ
+>>>>>>> Stashed changes
                 </dt>
                 <dd>
                     <textarea name="message" cols="50" rows="5">
@@ -82,7 +90,11 @@ foreach ($posts as $post):
 ?>
         <div class="msg">
             <img src="./join/member_picture/<?php echo h($post['picture']); ?>" alt="<?php echo h($post['name']); ?>" width="48" height="48">
+<<<<<<< Updated upstream
             <p><?php echo makeLink(h($post['message'])); ?>
+=======
+            <p><?php echo h($post['message']); ?>
+>>>>>>> Stashed changes
                 <span class="name">（<?php echo h($post['name']); ?>）</span>
                 [ <a href="index.php?res=<?php echo h($post['id']); ?>">Re</a> ]
             </p>
