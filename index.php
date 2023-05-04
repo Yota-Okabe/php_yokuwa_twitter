@@ -26,7 +26,23 @@ if (!empty($_POST)) {
     }
 }
 
-$posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC');
+$page = $_REQUEST['page'];
+if ($page == '') {
+	$page = 1;
+}
+$page = max($page, 1);
+
+$counts = $db->query('SELECT COUNT(*) AS cnt FROM posts');
+$cnt = $counts->fetch();
+$maxPage = ceil($cnt['cnt'] / 5);
+$page = min($page, $maxPage);
+
+$start = ($page - 1) * 5;
+$start = max(0, $start);
+
+$posts = $db->prepare('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC LIMIT ?, 5');
+$posts->bindParam(1, $start, PDO::PARAM_INT);
+$posts->execute();
 
 if (isset($_REQUEST['res'])) {
     $response = $db->prepare('SELECT m.name, p.* FROM members m, posts p WHERE m.id=p.member_id AND p.id=? ORDER BY p.created DESC');
@@ -86,27 +102,50 @@ function makeLink($value) {
                 <span class="name">（<?php echo h($post['name']); ?>）</span>
                 [<a href="index.php?res=<?php echo h($post['id']); ?>">Re</a>]</p>
             <p class="day"><a href="view_post.php?id=<?php echo h($post['id']); ?>"><?php echo h($post['created']); ?></a>
-                <?php
-                if ($post['reply_post_id'] > 0):
-                ?>
-                    <a href="view_post.php?id=<?php echo h($post['reply_post_id']); ?>">返信元のメッセージ</a>
-                <?php
-                endif;
-                ?>
+            <?php
+            if ($post['reply_post_id'] > 0):
+            ?>
+                <a href="view.php?id=<?php echo h($post['reply_post_id']); ?>">返信元のメッセージ</a>
+            <?php
+            endif;
+            ?>
 
-                <?php
-                if ($_SESSION['id'] == $post['member_id']):
-                ?>
-                    [<a href="delete.php?id=<?php echo h($post['id']); ?>"; style="color: #F33;">削除</a>]
-                <?php
-                endif;
-                ?>
-
+            <?php
+            if ($_SESSION['id'] == $post['member_id']):
+            ?>
+                [<a href="delete.php?id=<?php echo h($post['id']); ?>"style="color:#F33;">削除</a>]
+            <?php
+            endif;
+            ?>
             </p>
         </div>
         <?php
         endforeach;
         ?>
+        <ul class="paging">
+            <?php
+            if ($page > 1) {
+            ?>
+                <li><a href="index.php?page=<?php print($page - 1); ?>">前のページへ</a></li>
+            <?php
+            } else {
+            ?>
+            <li>前のページへ</li>
+            <?php
+            }
+            ?>
+            <?php
+            if ($page < $maxPage) {
+            ?>
+                <li><a href="index.php?page=<?php print($page + 1); ?>">次のページへ</a></li>
+            <?php
+            } else {
+            ?>
+            <li>次のページへ</li>
+            <?php
+            }
+            ?>
+        </ul>
     </div>
 </div>
 </body>
