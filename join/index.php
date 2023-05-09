@@ -1,5 +1,5 @@
 <?php 
-require('./dbconnect.php');
+require('../dbconnect.php');
 session_start();
 if (!empty($_POST)) {
     if ($_POST['name'] == '') {

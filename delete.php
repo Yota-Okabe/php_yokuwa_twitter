@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('./join/dbconnect.php');
+require('dbconnect.php');
 if (isset($_SESSION['id'])) {
     $id = $_REQUEST['id'];
     $messages = $db->prepare('SELECT * FROM posts WHERE id=?');

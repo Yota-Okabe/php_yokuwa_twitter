@@ -1,12 +1,12 @@
 <?php
 session_start();
-require('./join/dbconnect.php');
+require('dbconnect.php');
 
 
 if ($_COOKIE['email'] != '') {
     $_POST['email'] = $_COOKIE['email'];
     $_POST['password'] = $_COOKIE['password'];
-    $_POST['save'] = $_COOKIE['on'];
+    $_POST['save'] = 'on';
 }
 
 if (!empty($_POST)) {
@@ -16,7 +16,7 @@ if (!empty($_POST)) {
             $_POST['email'],
             sha1($_POST['password'])
         ));
-    $member = $login->fetch();
+        $member = $login->fetch();
 
         if ($member) {
             $_SESSION['id'] = $member['id'];
@@ -77,7 +77,8 @@ if (!empty($_POST)) {
                 </dd>
                 <dt>ログイン情報の記録</dt>
                 <dd>
-                    <input type="checkbox" name="save" id="save" value="on"><label for="save"> 次回から自動的にログイン</label>
+                    <input type="checkbox" name="save" id="save" value="on">
+                    <label for="save"> 次回から自動的にログイン</label>
                 </dd>
             </dl>
             <div>
