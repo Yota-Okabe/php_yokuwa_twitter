@@ -19,7 +19,7 @@ if (!empty($_POST)) {
         $message->execute(array(
             $member['id'],
             $_POST['message'],
-            // $_POST['reply_post_id']
+            // $_POST['reply_post_id']、インサート文の中に「reply_post_id=?」を入れると通常のつぶやきができなくなる。
         ));
         header('Location: index.php');
         exit();
